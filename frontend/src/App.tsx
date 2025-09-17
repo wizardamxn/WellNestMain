@@ -7,6 +7,7 @@ import { UserProvider } from "./hooks/useUserData";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import Student from "./pages/Student";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/not-found";
 
@@ -43,6 +44,7 @@ function Router() {
       <div className="pt-16">
         <Switch>
           <Route path="/" component={Home} />
+          <Route path="/student" component={Student} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/admin" component={AdminDashboard} />
           <Route path="/features/:id" component={FeaturePage} />

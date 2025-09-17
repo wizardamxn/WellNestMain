@@ -4,9 +4,12 @@ import { useGraph } from "@react-three/fiber";
 import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
 import { SkeletonUtils } from "three-stdlib";
 
-type ModelProps = JSX.IntrinsicElements["group"];
+type ModelProps = JSX.IntrinsicElements["group"] & {
+  isSpeaking?: boolean;
+};
 
 export function Avatar(props: ModelProps) {
+  const { isSpeaking, ...groupProps } = props;
   const { animations: idleAnimation } = useFBX("/animations/BreathingIdle.fbx");
   const { animations: nodAnimation } = useFBX(
     "/animations/ThoughtfulHeadNod.fbx"
@@ -42,13 +45,22 @@ export function Avatar(props: ModelProps) {
     group
   );
 
+  // Handle speaking animation
+  React.useEffect(() => {
+    if (isSpeaking) {
+      setAnimation("Talking");
+    } else {
+      setAnimation("Idle");
+    }
+  }, [isSpeaking]);
+
   React.useEffect(() => {
     actions[animation]?.reset().fadeIn(0.5).play();
     return () => actions[animation]?.fadeOut(0.5);
   }, [animation]);
 
   return (
-    <group {...props} dispose={null} ref={group}>
+    <group {...groupProps} dispose={null} ref={group}>
       <primitive object={nodes.Hips} />
       <skinnedMesh
         geometry={nodes.Wolf3D_Hair.geometry}
