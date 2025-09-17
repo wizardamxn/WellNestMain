@@ -4,6 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Shield, Users, Globe, ArrowRight, Phone } from 'lucide-react';
 import { useUser } from '../hooks/useUserData';
+import InspiringSection from '../components/InspiringSection';
+import SuccessStories from '../components/SuccessStories';
+import CulturalImpact from '../components/CulturalImpact';
+import DataDrivenImpact from '../components/DataDrivenImpact';
 
 const affirmations = [
   "You are stronger than you think, and we're here to support you.",
@@ -197,6 +201,18 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Inspiring Sections */}
+      <InspiringSection />
+      
+      {/* Success Stories */}
+      <SuccessStories />
+      
+      {/* Cultural Impact */}
+      <CulturalImpact />
+      
+      {/* Data-Driven Impact */}
+      <DataDrivenImpact />
 
       {/* Call to Action */}
       <section className="py-16 px-4 bg-primary text-primary-foreground">
