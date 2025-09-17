@@ -6,10 +6,11 @@ import { SkeletonUtils } from "three-stdlib";
 
 type ModelProps = JSX.IntrinsicElements["group"] & {
   isSpeaking?: boolean;
+  emotion?: "happy" | "sad" | "thinking" | "greeting" | "idle";
 };
 
 export function Avatar(props: ModelProps) {
-  const { isSpeaking, ...groupProps } = props;
+  const { isSpeaking, emotion = "idle", ...groupProps } = props;
   const { animations: idleAnimation } = useFBX("/animations/BreathingIdle.fbx");
   const { animations: nodAnimation } = useFBX(
     "/animations/ThoughtfulHeadNod.fbx"
@@ -45,14 +46,29 @@ export function Avatar(props: ModelProps) {
     group
   );
 
-  // Handle speaking animation
+  // Handle speaking and emotion animations
   React.useEffect(() => {
     if (isSpeaking) {
       setAnimation("Talking");
     } else {
-      setAnimation("Idle");
+      switch (emotion) {
+        case "happy":
+          setAnimation("Laughing");
+          break;
+        case "sad":
+          setAnimation("Nod");
+          break;
+        case "thinking":
+          setAnimation("Nod");
+          break;
+        case "greeting":
+          setAnimation("Greeting");
+          break;
+        default:
+          setAnimation("Idle");
+      }
     }
-  }, [isSpeaking]);
+  }, [isSpeaking, emotion]);
 
   React.useEffect(() => {
     actions[animation]?.reset().fadeIn(0.5).play();
